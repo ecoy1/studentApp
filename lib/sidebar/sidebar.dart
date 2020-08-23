@@ -131,6 +131,14 @@ class _SideBarState extends State<SideBar> with SingleTickerProviderStateMixin<S
                           BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.MyGradesClickedEvent);
                         },
                       ),
+                      MenuItem(
+                        icon: Icons.mood,
+                        title: "Mood Tracker",
+                        onTap: () {
+                          onIconPressed();
+                          BlocProvider.of<NavigationBloc>(context).add(NavigationEvents.MoodTrackerClickedEvent);
+                        },
+                      ),
                       Divider(
                         height: 64,
                         thickness: 0.5,
