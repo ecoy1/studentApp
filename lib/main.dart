@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:student_app/pages/grade_tracker.dart';
+import 'package:student_app/pages/homepage.dart';
+import 'package:student_app/pages/loading.dart';
+import 'package:student_app/sidebar/sidebar_layout.dart';
 
-void main() => runApp(MaterialApp(
-  home: Home(),
-));
+void main() => runApp(MyApp());
 
-class Home extends StatefulWidget {
-  @override
-  _HomeState createState() => _HomeState();
-}
 
-class _HomeState extends State<Home> {
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color.fromRGBO( 125, 49, 100 , 1),
-        title: Text('This be burgundy'),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        scaffoldBackgroundColor: Colors.white,
+        primaryColor: Colors.white
       ),
-      backgroundColor: Colors.grey[900],
+      home: SideBarLayout(),
     );
   }
 }
+
