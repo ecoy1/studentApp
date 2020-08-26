@@ -24,7 +24,7 @@ class _SideBarLayoutState extends State<SideBarLayout> {
             ),      //This is added to the stack first
             SideBar()   //This is added on top of SideBar
           ],
-        ), 
+        ),
       ),
     );
   }
