@@ -1,3 +1,4 @@
+import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:student_app/bloc/navigation_bloc/navigation_bloc.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -12,14 +13,13 @@ class _MoodTrackerState extends State<MoodTracker> {
 
   int difference = (DateTime.now().difference(DateTime(DateTime.now().year, 12, 31)).inDays) * (-1) + 1; // days left in the year
   CalendarController _controller;
+  Color daycolor = Color.fromRGBO( 125, 49, 100 , 1);
 
   @override
   void initState(){
     super.initState();
     _controller = CalendarController();
   }
-
-  bool _visible = true;
 
   @override
   Widget build(BuildContext context) {
@@ -39,10 +39,6 @@ class _MoodTrackerState extends State<MoodTracker> {
         children: [
           TableCalendar(
             initialCalendarFormat: CalendarFormat.month,
-            calendarStyle: CalendarStyle(
-              todayColor: Color.fromRGBO( 125, 49, 100 , 1),
-              selectedColor: Colors.grey[800],
-            ),
             startingDayOfWeek: StartingDayOfWeek.monday,
             headerStyle: HeaderStyle(
               centerHeaderTitle: true,
@@ -56,9 +52,7 @@ class _MoodTrackerState extends State<MoodTracker> {
                 borderRadius: BorderRadius.circular(20),
               )
             ),
-            onDaySelected: (date, event){
 
-            },
             builders: CalendarBuilders(
               dowWeekendBuilder: (context, date) =>
                 Container(
@@ -83,36 +77,25 @@ class _MoodTrackerState extends State<MoodTracker> {
                       ),
                     ),
                     decoration: BoxDecoration(
-                      color: Color.fromRGBO( 125, 49, 100 , 1),
+                      color: daycolor,
                       shape: BoxShape.circle,
                     ),
                   ),
               selectedDayBuilder: (context, date, events) =>
-                GestureDetector(
-                  onTap: (){
-                    setState(() {
-                      _visible = !_visible;
-                    });
-                  },
-                  child: AnimatedOpacity(
-                    opacity: _visible ? 1.0 : 0.0,
-                    duration: Duration(milliseconds: 500),
-                    child: Container(
-                      margin: const EdgeInsets.all(4.0),
-                      alignment: Alignment.center,
-                      child: Text(
-                          date.day.toString(),
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.grey[800],
-                        shape: BoxShape.circle,
-                      ),
+                Container(
+                  margin: const EdgeInsets.all(4.0),
+                  alignment: Alignment.center,
+                  child: Text(
+                      date.day.toString(),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
                     ),
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[700],
+                    shape: BoxShape.circle,
                   ),
                 ),
               outsideDayBuilder: (context, date, events) =>
@@ -167,6 +150,109 @@ class _MoodTrackerState extends State<MoodTracker> {
             calendarController: _controller,
           ),
         ],
+      ),
+      floatingActionButton: new FloatingActionButton(
+        child: Text('Mood'),
+          backgroundColor: Color.fromRGBO( 125, 49, 100 , 1),
+          onPressed: () {
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    contentPadding: EdgeInsets.all(5.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    ),
+                    title: Text('How did you feel today ${DateTime
+                        .now()
+                        .day}.${DateTime
+                        .now()
+                        .month}?'),
+                    content: Container(
+                      height: 90.0,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              IconButton(
+                                icon: Icon(CommunityMaterialIcons.emoticon_happy),
+                                color: Colors.deepPurpleAccent,
+                                tooltip: 'Happy\nJoyful\nContent\nRelaxed',
+                                onPressed: () {
+                                  setState(() {
+                                    daycolor = Colors.deepPurpleAccent;
+                                  });
+                                  Navigator.pop(context);
+                                },
+                              ),
+                              IconButton(
+                                icon: Icon(CommunityMaterialIcons.emoticon_sad),
+                                color: Colors.blue[800],
+                                tooltip: 'Sad\nLonely\nDepressed\nInsecure',
+                                onPressed: () {
+                                  setState(() {
+                                    daycolor = Colors.blue[800];
+                                  });
+                                  Navigator.pop(context);
+                                },
+                              ),
+                              IconButton(
+                                icon: Icon(CommunityMaterialIcons.github),
+                                color: Colors.green[800],
+                                tooltip: 'Productive\nMotivated\nAlive\nExcited',
+                                onPressed: () {
+                                  setState(() {
+                                    daycolor = Colors.green[800];
+                                  });
+                                  Navigator.pop(context);
+                                },
+                              ),
+                              IconButton(
+                                icon: Icon(CommunityMaterialIcons.battery_low),
+                                color: Colors.yellow,
+                                tooltip: 'Sick\nTired\nBored\nLazy',
+                                onPressed: () {
+                                  setState(() {
+                                    daycolor = Colors.yellow;
+                                  });
+                                  Navigator.pop(context);
+                                },
+                              ),
+                              IconButton(
+                                icon: Icon(CommunityMaterialIcons.emoticon_neutral),
+                                color: Colors.orange[800],
+                                tooltip: 'Average\nNormal\nFine\nOK',
+                                onPressed: () {
+                                  setState(() {
+                                    daycolor = Colors.orange[800];
+                                  });
+                                  Navigator.pop(context);
+                                },
+                              ),
+                              IconButton(
+                                icon: Icon(CommunityMaterialIcons.emoticon_angry),
+                                color: Colors.red[700],
+                                tooltip: 'Angry\nAnxious\nFrustrated\nAnnoyed',
+                                onPressed: () {
+                                  setState(() {
+                                    daycolor = Colors.red[700];
+                                  });
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }
+            );
+          }
       ),
     );
   }
